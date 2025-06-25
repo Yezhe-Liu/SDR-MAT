@@ -1,0 +1,17 @@
+%% rf config
+%% AD936X支持的采样率范围是521K-61.44M  时间戳-接收和发送的定位
+%% tx
+ret=calllib('libyunsdr_ss','yunsdr_set_tx_lo_freq',dptr,0,uint64(1500e6));
+ret=calllib('libyunsdr_ss','yunsdr_set_tx1_attenuation',dptr,0,uint32(0));%0~89e3% 30e3
+ret=calllib('libyunsdr_ss','yunsdr_set_tx2_attenuation',dptr,0,uint32(30e3));
+ret=calllib('libyunsdr_ss','yunsdr_set_tx_rf_bandwidth',dptr,0,56e6);% 200e3~56e6
+%% rx
+ret=calllib('libyunsdr_ss','yunsdr_set_rx_lo_freq',dptr,0,uint64(1500e6));
+ret=calllib('libyunsdr_ss','yunsdr_set_rx1_rf_gain',dptr,0,uint32(5));%1~71
+ret=calllib('libyunsdr_ss','yunsdr_set_rx2_rf_gain',dptr,0,uint32(5));
+ret=calllib('libyunsdr_ss','yunsdr_set_rx_rf_bandwidth',dptr,0,56e6);
+%% ref clock
+ret=calllib('libyunsdr_ss','yunsdr_set_tx_sampling_freq',dptr,0,uint32(40e6));
+ret=calllib('libyunsdr_ss','yunsdr_set_auxdac1',dptr,0,1600);%0~3300mv
+%% rx buffer
+ret=calllib('libyunsdr_ss','yunsdr_set_hwbuf_depth',dptr,0,uint32(120*1024*1024));
